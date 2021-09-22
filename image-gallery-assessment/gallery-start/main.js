@@ -12,4 +12,11 @@ for (let i = 1; i < 6; i++) {
     thumbBar.appendChild(newImage);
 }
 
+const changeImage = (e) => {
+    const imgSrc = e.srcElement.getAttribute('src');
+    displayedImage.setAttribute('src', imgSrc);
+}
+
+thumbBar.addEventListener('click', changeImage);
+
 /* Wiring up the Darken/Lighten button */
