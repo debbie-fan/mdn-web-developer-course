@@ -61,7 +61,42 @@
     </pre>
 
     <script>
+        const verseChoose = document.querySelector('select');
+        const poemDisplay = document.querySelector('pre');
 
+        // store reference of the selected verse
+        verseChoose.onchange = () => {
+            const verse = verseChoose.value;
+            updateDisplay(verse);
+        };
+
+        updateDisplay = (verse) => {
+            // convert the selected element value to corresponding file name
+            // web servers tend to be case sensitive and file name has no space
+            verse = verse.replace(" ", "");
+            verse = verse.toLowerCase();
+            let url = verse + '.txt';
+            
+            // create a new request object
+            let request = new XMLHttpRequest();
+
+            // use open() method to specify what HTTP request method to use
+            // and what its URL is
+            request.open('GET', url);
+            // set up expected type of response
+            request.responseType = 'text';
+            // set <pre> element to the value of the response
+            // after resource is feched (asynchronous operation)
+            request.onload = () => {
+                poemDisplay.textContent = request.response;
+            }
+            // run XHR request
+            request.send();
+        }
+
+        // show verse 1 by default
+        updateDisplay('Verse1');
+        verseChoose.value = 'Verse 1';
     </script>
   </body>
 </html>
